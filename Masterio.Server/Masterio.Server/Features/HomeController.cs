@@ -1,3 +1,4 @@
+using Masterio.Server.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,10 @@ public class HomeController : ApiController
     [Authorize]
     public ActionResult Get()
     {
-        return Ok("Works!");
+        // We don;t need it here. Just example how to get current userId.
+        var userId = this.User.GetId();
+        //var iserId = 
+        var result = $"Works! UserId: {userId}";
+        return Ok(result);
     }
 }

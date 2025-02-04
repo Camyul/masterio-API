@@ -25,6 +25,7 @@ namespace Masterio.Server.Features.Identity
 
         [HttpPost]
         [Route(nameof(Register))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Register(RegisterRequestModel model)
         {
             var user = new User
@@ -45,6 +46,7 @@ namespace Masterio.Server.Features.Identity
 
         [HttpPost]
         [Route(nameof(Login))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<LoginResponseModel>> Login(LoginRequestModel model)
         {
             var user = await userManager.FindByNameAsync(model.UserName);
