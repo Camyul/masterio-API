@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Masterio.Server.Infrastructure;
+using Masterio.Server.Features.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<MasterioDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -26,7 +29,6 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
 })
     .AddEntityFrameworkStores<MasterioDbContext>();
-//.AddDefaultTokenProviders(); // Add this line
 
 var applicationSettingsConfiguration = builder.Configuration.GetSection("ApplicationSettings");
 builder.Services.Configure<AppSettings>(applicationSettingsConfiguration);
@@ -43,14 +45,10 @@ builder.Services.AddAuthentication(options =>
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        //ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["ApplicationSettings:Secret"]))
         IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
         ValidateAudience = false,
-        //ValidIssuer = builder.Configuration["ApplicationSettings:Issuer"],
-        //ValidAudience = builder.Configuration["ApplicationSettings:Audience"],
     };
 });
 
