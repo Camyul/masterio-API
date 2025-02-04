@@ -13,7 +13,7 @@ public class HomeController : ApiController
         // We don;t need it here. Just example how to get current userId.
         var userId = this.User.GetId();
         //var iserId = 
-        var result = $"Works! UserId: {userId}";
+        var result = new { userId = $"Works! UserId: {userId}" };
         return Ok(result);
     }
 }
