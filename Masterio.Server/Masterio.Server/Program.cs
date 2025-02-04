@@ -17,7 +17,7 @@ builder.Services.AddDbContext<MasterioDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
