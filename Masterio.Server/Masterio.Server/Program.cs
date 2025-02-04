@@ -18,6 +18,7 @@ builder.Services.AddDbContext<MasterioDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddApplicationServices();
+builder.Services.AddSwagger();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -61,6 +62,13 @@ var app = builder.Build();
 //{
 //    app.UseMigrationsEndPoint();
 //}
+
+app.UseSwagger();
+app.UseSwaggerUI(options => 
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Masterio API");
+        options.RoutePrefix = string.Empty;
+    });
 
 app.UseRouting();
 
